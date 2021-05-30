@@ -1,4 +1,7 @@
 package com.example.gspass_android.viewmodel
 
-class LoginViewModel {
+import androidx.lifecycle.ViewModel
+
+class LoginViewModel : ViewModel(){
+
 }
