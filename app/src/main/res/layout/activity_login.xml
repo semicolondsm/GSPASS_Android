@@ -59,6 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:src="@drawable/login"
+            android:backgroundTint="@color/black"
             android:onClick="@{()->vm.loginClick()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

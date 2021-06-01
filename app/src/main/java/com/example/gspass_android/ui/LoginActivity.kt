@@ -17,5 +17,4 @@ class LoginActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         setContentView(binding.root)
     }
-
 }
