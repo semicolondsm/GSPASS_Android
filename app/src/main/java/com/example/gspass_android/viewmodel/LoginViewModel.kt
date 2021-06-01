@@ -26,8 +26,12 @@ class LoginViewModel : ViewModel(){
             baseApi.login(LoginInfoData(id,passward))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
+                    .doOnError{
+                        println(it.message)
+                    }
                     .subscribe { response ->
                         println(response.raw())
+                        println("성공")
                     }
         }
         else{

@@ -16,7 +16,7 @@ object BaseApi {
     val CONNECT_TIMEOUT: Long = 15
     val WRITE_TIMEOUT: Long = 15
     val READ_TIMEOUT: Long = 15
-    val API_URL: String = "https://api.eungyeol.live/"
+    val API_URL: String = "https://13.125.161.204/"
     var OKHttpClient: OkHttpClient
     var mRetrofit: Retrofit
     var KotlinRetrofitInterface: ApiService
