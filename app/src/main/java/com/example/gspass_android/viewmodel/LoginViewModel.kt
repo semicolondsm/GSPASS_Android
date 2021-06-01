@@ -24,15 +24,12 @@ class LoginViewModel : ViewModel(){
         val passward = loginPassword.value
         if(id != null && passward != null){
             baseApi.login(LoginInfoData(id,passward))
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnError{
-                        println(it.message)
-                    }
-                    .subscribe { response ->
-                        println(response.raw())
-                        println("성공")
-                    }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { response ->
+                    println(response.raw())
+                    println("성공")
+                }
         }
         else{
             println("아이디 비번을 입력해주세요")
