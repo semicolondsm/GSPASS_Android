@@ -34,5 +34,6 @@ class LoginViewModel : ViewModel(){
         else{
             println("아이디 비번을 입력해주세요")
         }
+
     }
 }
