@@ -1,8 +1,10 @@
 package com.example.gspass_android.viewmodel
 
 import android.annotation.SuppressLint
+import android.content.Intent
 
 import com.example.gspass_android.BaseApi
+import com.example.gspass_android.MainActivity
 import com.example.gspass_android.base.BaseViewModel
 import com.example.gspass_android.base.SingleLiveEvent
 import com.example.gspass_android.data.LoginInfoData
@@ -22,7 +24,6 @@ class LoginViewModel(
     val successEvent = SingleLiveEvent<Unit>()
     val failEvent = SingleLiveEvent<String>()
 
-    @SuppressLint("CheckResult")
     fun login(id: String, password: String) {
         val apiResult = baseApi.login(LoginInfoData(id, password))
         val disposableSingleObserver = object : DisposableSingleObserver<TokenData>() {
@@ -38,7 +39,7 @@ class LoginViewModel(
                 when (e) {
                     is HttpException -> when (e.code()) {
                         404 -> failEvent.setValue("아이디와 비밀번호를 확인해 주세요")
-                        500 -> failEvent.setValue("서버 오류가 발생했습니다")
+                        500 -> failEvent.setValue("서버 오류가 발생하였습니다")
                         else ->failEvent.setValue("알 수 없는 에러가 발생하였습니다")
                     }
                 }
@@ -51,4 +52,5 @@ class LoginViewModel(
 
         addDisposable(observer)
     }
+
 }

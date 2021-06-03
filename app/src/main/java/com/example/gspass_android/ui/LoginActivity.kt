@@ -29,8 +29,6 @@ class LoginActivity : AppCompatActivity() {
         val loginId : EditText=  findViewById(R.id.id)
         val loginPassword : EditText = findViewById(R.id.passward)
 
-        val tokenData : TokenData
-
         val loginButton : ImageButton = findViewById(R.id.login_button)
 
 

@@ -4,6 +4,7 @@ import com.example.gspass_android.BaseApi
 import com.example.gspass_android.pref.LocalStorage
 import com.example.gspass_android.pref.SharedPrefStorage
 import com.example.gspass_android.viewmodel.LoginViewModel
+import com.example.gspass_android.viewmodel.RegisterViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -13,5 +14,6 @@ val modules = module {
 
     single { BaseApi() }
 
+    viewModel { RegisterViewModel(get(),get()) }
     viewModel { LoginViewModel(get(),get()) }
 }

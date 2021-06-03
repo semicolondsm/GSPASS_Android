@@ -1,6 +1,7 @@
 package com.example.gspass_android
 
 import com.example.gspass_android.data.LoginInfoData
+import com.example.gspass_android.data.RegisterInfoData
 import com.example.gspass_android.data.TokenData
 import io.reactivex.Single
 import retrofit2.http.Body
@@ -12,5 +13,8 @@ interface ApiService {
         @Body loginInfo: LoginInfoData
     ):Single<TokenData>
 
-  
+    @POST("register")
+    fun register(
+        @Body registerInfo : RegisterInfoData
+    ):Single<TokenData>
 }

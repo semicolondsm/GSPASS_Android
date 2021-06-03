@@ -6,18 +6,20 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.viewpager2.widget.ViewPager2
 import com.example.gspass_android.MainActivity
 import com.example.gspass_android.R
 import com.example.gspass_android.adapter.RegisterAdapter
 import com.example.gspass_android.databinding.ActivityRegisterBinding
 import com.example.gspass_android.viewmodel.RegisterViewModel
-import org.koin.android.ext.android.get
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class RegisterActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityRegisterBinding
-    lateinit var viewModel : RegisterViewModel
+    private val viewModel : RegisterViewModel by viewModel()
     lateinit var viewPager2: ViewPager2
 
     lateinit var schoolCode : String
@@ -29,8 +31,7 @@ class RegisterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = RegisterViewModel()
-        binding = ActivityRegisterBinding.inflate(layoutInflater)
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_register)
         binding.vm = viewModel
         binding.lifecycleOwner = this
         setContentView(binding.root)
@@ -57,7 +58,7 @@ class RegisterActivity : AppCompatActivity() {
                 }
                 1 ->{
                     userGcn = registerAdapter.registerUserInfoFragment.getUserGcn()
-                    schoolYear = registerAdapter.registerUserInfoFragment.getUserGcn()
+                    schoolYear = registerAdapter.registerUserInfoFragment.getSchoolYear()
                     if(userGcn != "" && schoolYear != ""){
                         plusPage()
                     }else{
@@ -80,11 +81,21 @@ class RegisterActivity : AppCompatActivity() {
                     }else if(password != checkPassword){
                         Toast.makeText(this,"비밀번호와 확인이 일치 하지 않습니다", Toast.LENGTH_SHORT).show()
                     }else{
-                        여기다 회원가입 api 호출
+                        viewModel.register(id,password,userGcn,schoolYear,schoolCode)
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
                     }
                 }
             }
         }
+        viewModel.successEvent.observe(this,{
+            Toast.makeText(this,"회원가입에 성공하였습니다",Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        })
+        viewModel.failEvent.observe(this,{
+            Toast.makeText(this,it,Toast.LENGTH_SHORT).show()
+        })
 
         backButton.setOnClickListener {
             if(viewPager2.currentItem == 0) {
@@ -94,7 +105,6 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
     }
-
     override fun onBackPressed() {
         if(viewPager2.currentItem == 0) {
             super.onBackPressed()
