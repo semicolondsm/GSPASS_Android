@@ -30,7 +30,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:hint="학교 코드"
-            android:text="@={vm.schoolCode}"
             android:textColorHint="#ffffff"
             android:textColor="#ffffff"
             app:layout_constraintStart_toStartOf="@id/school_code"

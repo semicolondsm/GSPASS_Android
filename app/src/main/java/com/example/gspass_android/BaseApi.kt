@@ -11,7 +11,7 @@ import retrofit2.create
 import rxdogtag2.RxDogTag
 import java.util.concurrent.TimeUnit
 
-object BaseApi {
+class BaseApi {
     var club_id: String = ""
     val CONNECT_TIMEOUT: Long = 15
     val WRITE_TIMEOUT: Long = 15

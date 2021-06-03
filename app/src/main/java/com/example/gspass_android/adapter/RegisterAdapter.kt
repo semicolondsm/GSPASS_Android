@@ -7,8 +7,14 @@ import com.example.gspass_android.ui.RegisterIdFragment
 import com.example.gspass_android.ui.RegisterPasswordFragment
 import com.example.gspass_android.ui.RegisterSchoolCodeFragment
 import com.example.gspass_android.ui.RegisterUserInfoFragment
+import org.koin.android.ext.android.get
 
 class RegisterAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
+
+    val registerSchoolCodeFragment = RegisterSchoolCodeFragment()
+    val registerUserInfoFragment = RegisterUserInfoFragment()
+    val registerIdFragment = RegisterIdFragment()
+    val registerPasswordFragment = RegisterPasswordFragment()
 
     companion object {
         // 페이지 개수를 정적 변수로 선언
@@ -21,13 +27,13 @@ class RegisterAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter
 
     override fun createFragment(position: Int): Fragment {
         if(position == 0) {
-            return RegisterSchoolCodeFragment()
+            return registerSchoolCodeFragment
         }else if(position == 1) {
-            return RegisterUserInfoFragment()
+            return registerUserInfoFragment
         }else if(position==2){
-            return RegisterIdFragment()
+            return registerIdFragment
         }else{
-            return RegisterPasswordFragment()
+            return registerPasswordFragment
         }
     }
 

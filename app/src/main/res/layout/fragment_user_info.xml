@@ -29,17 +29,16 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:hint="학번"
-            android:text="@={vm.schoolGcn}"
             android:textColorHint="#ffffff"
             android:textColor="#ffffff"
             app:layout_constraintStart_toStartOf="@id/user_info"
             app:layout_constraintTop_toBottomOf="@id/user_info"/>
         <EditText
+            android:id="@+id/school_year"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:hint="입학년도"
-            android:text="@={vm.schoolYear}"
             android:textColorHint="#ffffff"
             android:textColor="#ffffff"
             app:layout_constraintStart_toStartOf="@id/user_gcn"

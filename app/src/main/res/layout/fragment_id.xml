@@ -23,11 +23,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
         <EditText
+            android:id="@+id/id"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:hint="아이디를 입력해주세요"
-            android:text="@={vm.id}"
             android:textColorHint="#ffffff"
             android:textColor="#ffffff"
             app:layout_constraintStart_toStartOf="@id/school_code"

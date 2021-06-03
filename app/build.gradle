@@ -72,6 +72,11 @@ dependencies {
     //viewpager
     implementation "androidx.viewpager2:viewpager2:1.0.0"
 
+    //koin
+    implementation "org.koin:koin-androidx-scope:2.2.2"
+    implementation "org.koin:koin-androidx-viewmodel:2.2.2"
+    implementation "org.koin:koin-androidx-ext:2.2.2"
+
     // lifecycle
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
 }
