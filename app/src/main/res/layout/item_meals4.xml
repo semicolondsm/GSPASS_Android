@@ -21,7 +21,7 @@
 
         <TextView
             android:id="@+id/imageView3"
-            android:text="4번"
+            android:text="@{vm.today}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
