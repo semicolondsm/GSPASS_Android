@@ -1,4 +1,4 @@
-package com.example.gspass_android.ui
+package com.example.gspass_android.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

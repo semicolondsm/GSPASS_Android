@@ -1,10 +1,6 @@
 package com.example.gspass_android.viewmodel
 
-import android.annotation.SuppressLint
-import android.content.Intent
-
 import com.example.gspass_android.BaseApi
-import com.example.gspass_android.MainActivity
 import com.example.gspass_android.base.BaseViewModel
 import com.example.gspass_android.base.SingleLiveEvent
 import com.example.gspass_android.data.LoginInfoData

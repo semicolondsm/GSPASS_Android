@@ -1,14 +1,12 @@
-package com.example.gspass_android.ui
+package com.example.gspass_android.ui.activity
 
 import android.content.Intent
-import android.media.Image
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager2.widget.ViewPager2
-import com.example.gspass_android.MainActivity
 import com.example.gspass_android.R
 import com.example.gspass_android.adapter.RegisterAdapter
 import com.example.gspass_android.databinding.ActivityRegisterBinding
@@ -36,9 +34,9 @@ class RegisterActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         setContentView(binding.root)
 
-
         val nextButton : ImageButton = findViewById(R.id.nextBtn)
         val backButton : ImageButton = findViewById(R.id.backBtn)
+
         viewPager2 = findViewById(R.id.viewPager2)
 
         val registerAdapter = RegisterAdapter(this)
@@ -47,7 +45,6 @@ class RegisterActivity : AppCompatActivity() {
         fun plusPage(){
             viewPager2.currentItem = viewPager2.currentItem + 1
         }
-
         nextButton.setOnClickListener {
             when(viewPager2.currentItem){
                 0 ->{

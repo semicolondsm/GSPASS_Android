@@ -3,11 +3,10 @@ package com.example.gspass_android.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.gspass_android.ui.RegisterIdFragment
-import com.example.gspass_android.ui.RegisterPasswordFragment
-import com.example.gspass_android.ui.RegisterSchoolCodeFragment
-import com.example.gspass_android.ui.RegisterUserInfoFragment
-import org.koin.android.ext.android.get
+import com.example.gspass_android.ui.fragment.RegisterIdFragment
+import com.example.gspass_android.ui.fragment.RegisterPasswordFragment
+import com.example.gspass_android.ui.fragment.RegisterSchoolCodeFragment
+import com.example.gspass_android.ui.fragment.RegisterUserInfoFragment
 
 class RegisterAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
 

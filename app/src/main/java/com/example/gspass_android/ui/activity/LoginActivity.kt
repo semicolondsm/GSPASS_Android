@@ -1,23 +1,20 @@
-package com.example.gspass_android.ui
+package com.example.gspass_android.ui.activity
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import android.media.session.MediaSession
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import com.example.gspass_android.MainActivity
 import com.example.gspass_android.R
-import com.example.gspass_android.data.TokenData
 import com.example.gspass_android.databinding.ActivityLoginBinding
 import com.example.gspass_android.viewmodel.LoginViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginActivity : AppCompatActivity() {
-    val viewModel : LoginViewModel by viewModel()
+
+    private val viewModel : LoginViewModel by viewModel()
     lateinit var binding : ActivityLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,9 +29,12 @@ class LoginActivity : AppCompatActivity() {
         val loginButton : ImageButton = findViewById(R.id.login_button)
 
 
+
         loginButton.setOnClickListener {
             if(loginId.toString() !="" && loginPassword.toString() !="" ){
-                viewModel.login(loginId.toString(),loginPassword.toString())
+                viewModel.login(loginId.text.toString(),loginPassword.text.toString())
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
             }
             else{
                 println("아이디 비번을 입력하세요")

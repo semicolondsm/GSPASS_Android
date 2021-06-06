@@ -11,9 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/black"
-        tools:context=".ui.RegisterActivity">
-
-
+        tools:context=".ui.activity.RegisterActivity">
 
         <ImageView
             android:id="@+id/school_code"

@@ -1,7 +1,6 @@
-package com.example.gspass_android.ui
+package com.example.gspass_android.ui.fragment
 
 import android.os.Bundle
-import android.text.Editable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +8,9 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import com.example.gspass_android.R
 
-class RegisterSchoolCodeFragment : Fragment() {
+class RegisterIdFragment: Fragment() {
 
-    lateinit var schoolCode : EditText
+    lateinit var id : EditText
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -19,13 +18,12 @@ class RegisterSchoolCodeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        val view : View = inflater.inflate(R.layout.fragment_school_code, container,false)
+        val view : View = inflater.inflate(R.layout.fragment_id, container,false)
 
-        schoolCode = view.findViewById(R.id.code)
+        id = view.findViewById(R.id.id)
 
         return view
     }
-    fun getSchoolCode() =
-        schoolCode.text.toString()
-
+    fun getPassId() =
+        id.text.toString()
 }
