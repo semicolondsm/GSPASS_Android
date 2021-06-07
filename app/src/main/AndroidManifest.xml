@@ -15,10 +15,11 @@
         android:theme="@style/Theme.AppCompat.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.activity.ChangePasswordActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".ui.activity.RegisterActivity"
-            android:windowSoftInputMode="adjustResize">
-
-        </activity>
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -64,7 +64,8 @@ class MainActivity : AppCompatActivity() {
             this, object : MyPageDialog.OnMemoItemMenuDialogButtonListener {
 
                 override fun onChangePasswordClick() {
-                    println("1번 눌름")
+                    val intent = Intent(this@MainActivity,ChangePasswordActivity::class.java)
+                    startActivity(intent)
                 }
 
                 override fun onLogoutClick() {
