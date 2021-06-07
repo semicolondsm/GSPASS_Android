@@ -31,14 +31,7 @@ class LoginActivity : AppCompatActivity() {
 
 
         loginButton.setOnClickListener {
-            if(loginId.toString() !="" && loginPassword.toString() !="" ){
-                viewModel.login(loginId.text.toString(),loginPassword.text.toString())
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-            }
-            else{
-                println("아이디 비번을 입력하세요")
-            }
+            viewModel.login(loginId.text.toString(),loginPassword.text.toString())
         }
         viewModel.successEvent.observe(this,{
             Toast.makeText(this,"로그인에 성공하였습니다",Toast.LENGTH_SHORT).show()
