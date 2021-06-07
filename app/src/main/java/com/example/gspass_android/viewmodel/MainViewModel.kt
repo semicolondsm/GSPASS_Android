@@ -118,6 +118,10 @@ class MainViewModel(
         return reDay
     }
 
+    fun logout(){
+        sharedPreferences.removeTokens()
+    }
+
     fun getMealsString(meals: ArrayList<String>): String {
         val size = meals.size
         var mealString = ""
