@@ -10,6 +10,7 @@ import com.example.gspass_android.R
 import com.example.gspass_android.adapter.MealAdapter
 import com.example.gspass_android.databinding.ActivityMainBinding
 import com.example.gspass_android.viewmodel.MainViewModel
+import kotlinx.coroutines.delay
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -24,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var viewPager2: ViewPager2
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -33,10 +35,11 @@ class MainActivity : AppCompatActivity() {
 
         val mealAdapter = MealAdapter(viewModel)
         mealAdapter.pos.value?.let { viewModel.meals(0) }
+        mealAdapter.pos.value?.let { viewModel.meals(-1) }
 
         mealAdapter.pos.observe(this, {
             println("이게 문제가 맞나요???????")
-            mealAdapter.pos.value?.let { viewModel.meals(it) }
+            mealAdapter.pos.value?.let { viewModel.meals(it+1) }
             println("$it 날짜 날짜")
         })
 
@@ -44,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 
         viewPager2.adapter = mealAdapter
         viewPager2.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        viewPager2.setCurrentItem(currentPosition, false)
+        viewPager2.setCurrentItem(currentPosition, true)
 
         viewModel.successEvent.observe(this, {
             println("성공성공성공${viewModel.morningMenu.value}")
