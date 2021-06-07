@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.example.gspass_android.BaseApi
+import com.example.gspass_android.adapter.MealAdapter
 import com.example.gspass_android.base.BaseViewModel
 import com.example.gspass_android.base.SingleLiveEvent
 import com.example.gspass_android.data.MealsData
@@ -44,6 +45,7 @@ class MainViewModel(
     val today = MutableLiveData<String>()
 
     private val accessToken = sharedPreferences.getAccessToken()
+    private val mealAdapter = MealAdapter(this)
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun meals(day: Int) {
@@ -67,28 +69,29 @@ class MainViewModel(
                         morningMenu2.value = getMealsString(t.breakfast)
                         lunchMenu2.value = getMealsString(t.lunch)
                         dinnerMenu2.value = getMealsString(t.dinner)
-                        println("22222222222222")
+                        println("111111111112")
                     }
                     2,-2->{
                         morningMenu3.value = getMealsString(t.breakfast)
                         lunchMenu3.value = getMealsString(t.lunch)
                         dinnerMenu3.value = getMealsString(t.dinner)
-                        println("33333333333333")
+                        println("111111111113")
                     }
                     3,-3->{
                         morningMenu4.value = getMealsString(t.breakfast)
                         lunchMenu4.value = getMealsString(t.lunch)
                         dinnerMenu4.value = getMealsString(t.dinner)
-                        println("444444444444444")
+                        println("111111111114")
                     }
                     else ->{
                         morningMenu5.value = getMealsString(t.breakfast)
                         lunchMenu5.value = getMealsString(t.lunch)
                         dinnerMenu5.value = getMealsString(t.dinner)
-                        println("5555555555555555")
+                        println("111111111115")
                     }
                 }
                 successEvent.setValue(Unit)
+                mealAdapter.notifyDataSetChanged()
             }
 
             override fun onError(e: Throwable) {
@@ -111,7 +114,7 @@ class MainViewModel(
     @RequiresApi(Build.VERSION_CODES.O)
     fun getDate(day : Int): String {
         val today : LocalDate = LocalDate.now()
-        println("${today.dayOfMonth} ${today.monthValue} 가나다라")
+        println("${today.dayOfMonth}월 ${today.monthValue}일 ")
         val date =  today.dayOfMonth
         val month = today.monthValue
         val reDay = "$month 월$date 일"

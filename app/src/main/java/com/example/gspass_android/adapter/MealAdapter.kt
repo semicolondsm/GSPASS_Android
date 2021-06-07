@@ -93,7 +93,7 @@ class MealAdapter(val viewModel : MainViewModel) : RecyclerView.Adapter<Recycler
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         fun setMeal(){
-            pos.setValue(position-1073741823)
+            pos.setValue(position-1073741822)
             println("이 숫자를 관찰 해야됨 $position")
         }
         if(position % 5 ==3){

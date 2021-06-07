@@ -35,5 +35,4 @@ class RegisterAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter
             return registerPasswordFragment
         }
     }
-
 }
