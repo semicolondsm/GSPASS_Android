@@ -28,8 +28,6 @@ class LoginActivity : AppCompatActivity() {
 
         val loginButton : ImageButton = findViewById(R.id.login_button)
 
-
-
         loginButton.setOnClickListener {
             viewModel.login(loginId.text.toString(),loginPassword.text.toString())
         }
