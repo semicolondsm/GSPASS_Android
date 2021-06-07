@@ -34,12 +34,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val mealAdapter = MealAdapter(viewModel)
-        mealAdapter.pos.value?.let { viewModel.meals(0) }
-        mealAdapter.pos.value?.let { viewModel.meals(-1) }
 
         mealAdapter.pos.observe(this, {
             println("이게 문제가 맞나요???????")
-            mealAdapter.pos.value?.let { viewModel.meals(it+1) }
+            mealAdapter.pos.value?.let { viewModel.meals(it) }
             println("$it 날짜 날짜")
         })
 
@@ -47,10 +45,20 @@ class MainActivity : AppCompatActivity() {
 
         viewPager2.adapter = mealAdapter
         viewPager2.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        viewPager2.setCurrentItem(currentPosition, true)
+        viewPager2.setCurrentItem(currentPosition, false)
 
+        var firstCheck = 0
         viewModel.successEvent.observe(this, {
             println("성공성공성공${viewModel.morningMenu.value}")
+            if(firstCheck ==0){
+                mealAdapter.pos.value?.let { viewModel.meals(2) }
+                mealAdapter.pos.value?.let { viewModel.meals(1) }
+                mealAdapter.pos.value?.let { viewModel.meals(0) }
+                mealAdapter.pos.value?.let { viewModel.meals(-1) }
+                mealAdapter.pos.value?.let { viewModel.meals(-2) }
+                firstCheck++
+                mealAdapter.notifyDataSetChanged()
+            }
         })
     }
 }

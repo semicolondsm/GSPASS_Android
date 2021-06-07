@@ -55,7 +55,7 @@ class MainViewModel(
         val disposableSingleObserver = object : DisposableSingleObserver<MealsData>() {
             @RequiresApi(Build.VERSION_CODES.O)
             override fun onSuccess(t: MealsData) {
-                getDate(0)
+                getDate(day)
                 println("데이 ${day}")
                 var checkDay = 0
                 if (day == 0) {
@@ -160,6 +160,7 @@ class MainViewModel(
         println("${today.dayOfMonth} ${today.monthValue} 가나다라")
         val date = today.dayOfMonth
         val month = today.monthValue
+        
         val reDay = "$month 월$date 일"
         return reDay
     }
