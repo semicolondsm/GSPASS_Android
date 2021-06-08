@@ -57,11 +57,9 @@ class MainActivity : AppCompatActivity() {
         viewModel.successEvent.observe(this, {
             println("성공성공성공${viewModel.morningMenu.value}")
             if(firstCheck ==0){
-                mealAdapter.pos.value?.let { viewModel.meals(2) }
-                mealAdapter.pos.value?.let { viewModel.meals(1) }
-                mealAdapter.pos.value?.let { viewModel.meals(0) }
                 mealAdapter.pos.value?.let { viewModel.meals(-1) }
-                mealAdapter.pos.value?.let { viewModel.meals(-2) }
+                mealAdapter.pos.value?.let { viewModel.meals(0) }
+                mealAdapter.pos.value?.let { viewModel.meals(1) }
                 firstCheck++
                 mealAdapter.notifyDataSetChanged()
             }
@@ -71,7 +69,6 @@ class MainActivity : AppCompatActivity() {
     private fun openMyPage() {
         MyPageDialog(
             this, object : MyPageDialog.OnMemoItemMenuDialogButtonListener {
-
                 override fun onChangePasswordClick() {
                     val intent = Intent(this@MainActivity,ChangePasswordActivity::class.java)
                     startActivity(intent)
