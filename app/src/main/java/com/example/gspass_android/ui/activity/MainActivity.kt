@@ -13,6 +13,7 @@ import com.example.gspass_android.adapter.MealAdapter
 import com.example.gspass_android.databinding.ActivityMainBinding
 import com.example.gspass_android.ui.dialog.MyPageDialog
 import com.example.gspass_android.viewmodel.MainViewModel
+import kotlinx.coroutines.delay
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -50,8 +51,20 @@ class MainActivity : AppCompatActivity() {
             println("$it 날짜 날짜")
             println("제발 정상이여라 ${viewPager2.offscreenPageLimit}")
         })
+
+
+        var firstCheck = 0
         viewModel.successEvent.observe(this, {
             println("성공성공성공${viewModel.morningMenu.value}")
+            if(firstCheck ==0){
+                mealAdapter.pos.value?.let { viewModel.meals(2) }
+                mealAdapter.pos.value?.let { viewModel.meals(1) }
+                mealAdapter.pos.value?.let { viewModel.meals(0) }
+                mealAdapter.pos.value?.let { viewModel.meals(-1) }
+                mealAdapter.pos.value?.let { viewModel.meals(-2) }
+                firstCheck++
+                mealAdapter.notifyDataSetChanged()
+            }
         })
     }
 

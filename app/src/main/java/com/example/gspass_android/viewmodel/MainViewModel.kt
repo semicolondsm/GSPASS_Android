@@ -51,45 +51,90 @@ class MainViewModel(
     fun meals(day: Int) {
         today.value = getDate(day)
         println("$accessToken asdfadfad")
-        val apiResult = baseApi.meals(accessToken, "$day")
+        val apiResult = baseApi.meals(accessToken, "${day}")
 
         val disposableSingleObserver = object : DisposableSingleObserver<MealsData>() {
             @RequiresApi(Build.VERSION_CODES.O)
             override fun onSuccess(t: MealsData) {
-                getDate(0)
+                getDate(day)
                 println("데이 ${day}")
-                when(day % 5){
-                    0->{
-                        morningMenu.value = getMealsString(t.breakfast)
-                        lunchMenu.value = getMealsString(t.lunch)
-                        dinnerMenu.value = getMealsString(t.dinner)
-                        println("111111111111")
+                var checkDay = 0
+                if (day == 0) {
+                    morningMenu.value = getMealsString(t.breakfast)
+                    lunchMenu.value = getMealsString(t.lunch)
+                    dinnerMenu.value = getMealsString(t.dinner)
+                    println("111111111111")
+                } else if (day > 0) {
+                    checkDay = day
+                    when (checkDay % 5) {
+                        0 -> {
+                            morningMenu.value = getMealsString(t.breakfast)
+                            lunchMenu.value = getMealsString(t.lunch)
+                            dinnerMenu.value = getMealsString(t.dinner)
+                            println("1111131111")
+                        }
+                        -1, 1 -> {
+                            morningMenu2.value = getMealsString(t.breakfast)
+                            lunchMenu2.value = getMealsString(t.lunch)
+                            dinnerMenu2.value = getMealsString(t.dinner)
+                            println("22222222222222")
+                        }
+                        2, -2 -> {
+                            morningMenu3.value = getMealsString(t.breakfast)
+                            lunchMenu3.value = getMealsString(t.lunch)
+                            dinnerMenu3.value = getMealsString(t.dinner)
+                            println("33333333333333")
+                        }
+                        3, -3 -> {
+                            morningMenu4.value = getMealsString(t.breakfast)
+                            lunchMenu4.value = getMealsString(t.lunch)
+                            dinnerMenu4.value = getMealsString(t.dinner)
+                            println("444444444444444")
+                        }
+                        else -> {
+                            morningMenu5.value = getMealsString(t.breakfast)
+                            lunchMenu5.value = getMealsString(t.lunch)
+                            dinnerMenu5.value = getMealsString(t.dinner)
+                            println("5555555555555555")
+                        }
                     }
-                    -1,1 ->{
-                        morningMenu2.value = getMealsString(t.breakfast)
-                        lunchMenu2.value = getMealsString(t.lunch)
-                        dinnerMenu2.value = getMealsString(t.dinner)
-                        println("111111111112")
-                    }
-                    2,-2->{
-                        morningMenu3.value = getMealsString(t.breakfast)
-                        lunchMenu3.value = getMealsString(t.lunch)
-                        dinnerMenu3.value = getMealsString(t.dinner)
-                        println("111111111113")
-                    }
-                    3,-3->{
-                        morningMenu4.value = getMealsString(t.breakfast)
-                        lunchMenu4.value = getMealsString(t.lunch)
-                        dinnerMenu4.value = getMealsString(t.dinner)
-                        println("111111111114")
-                    }
-                    else ->{
-                        morningMenu5.value = getMealsString(t.breakfast)
-                        lunchMenu5.value = getMealsString(t.lunch)
-                        dinnerMenu5.value = getMealsString(t.dinner)
-                        println("111111111115")
+                }else{
+                    checkDay = day - day - day
+                    println("$checkDay 가다나다라")
+                    when (checkDay % 5) {
+                        0 -> {
+                            morningMenu.value = getMealsString(t.breakfast)
+                            lunchMenu.value = getMealsString(t.lunch)
+                            dinnerMenu.value = getMealsString(t.dinner)
+                            println("11611111111")
+                        }
+                        4 -> {
+                            morningMenu2.value = getMealsString(t.breakfast)
+                            lunchMenu2.value = getMealsString(t.lunch)
+                            dinnerMenu2.value = getMealsString(t.dinner)
+                            println("22222222222222")
+                        }
+                        3 -> {
+                            morningMenu3.value = getMealsString(t.breakfast)
+                            lunchMenu3.value = getMealsString(t.lunch)
+                            dinnerMenu3.value = getMealsString(t.dinner)
+                            println("33333333333333")
+                        }
+                        2 -> {
+                            morningMenu4.value = getMealsString(t.breakfast)
+                            lunchMenu4.value = getMealsString(t.lunch)
+                            dinnerMenu4.value = getMealsString(t.dinner)
+                            println("444444444444444")
+                        }
+                        1 -> {
+                            morningMenu5.value = getMealsString(t.breakfast)
+                            lunchMenu5.value = getMealsString(t.lunch)
+                            dinnerMenu5.value = getMealsString(t.dinner)
+                            println("5555555555555555")
+                        }
                     }
                 }
+
                 successEvent.setValue(Unit)
                 mealAdapter.notifyDataSetChanged()
             }
@@ -112,11 +157,13 @@ class MainViewModel(
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun getDate(day : Int): String {
-        val today : LocalDate = LocalDate.now()
-        println("${today.dayOfMonth}월 ${today.monthValue}일 ")
-        val date =  today.dayOfMonth
+
+    fun getDate(day: Int): String {
+        val today: LocalDate = LocalDate.now()
+        println("${today.dayOfMonth} ${today.monthValue} 가나다라")
+        val date = today.dayOfMonth
         val month = today.monthValue
+        
         val reDay = "$month 월$date 일"
         return reDay
     }
@@ -128,13 +175,12 @@ class MainViewModel(
     fun getMealsString(meals: ArrayList<String>): String {
         val size = meals.size
         var mealString = ""
-        if(size > 1){
+        if (size > 1) {
             for (i in 0 until size) {
                 mealString += meals[i]
                 mealString += " "
             }
-        }
-        else{
+        } else {
             mealString = "급식이 없습니다 ㅜ"
         }
         return mealString
