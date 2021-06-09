@@ -25,4 +25,14 @@ interface ApiService {
         @Header("Authorization") accessToken: String,
         @Body changePassword : ChangePasswordData
     ):Single<Unit>
+
+    @POST("./")
+    fun pass(
+        @Header("Authorization") accessToken: String,
+        ):Single<PassData>
+
+    @GET("gspass/time")
+    fun getPassNextTime(
+        @Header("Authorization") accessToken: String
+        ):Single<PassNextTimeData>
 }

@@ -1,3 +1,5 @@
 package com.example.gspass_android.data
 
-data class NextPassTime()
+data class PassNextTimeData(
+    val gsPassTime : String
+)

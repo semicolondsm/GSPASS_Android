@@ -31,11 +31,11 @@ class LoginActivity : AppCompatActivity() {
         loginButton.setOnClickListener {
             viewModel.login(loginId.text.toString(),loginPassword.text.toString())
         }
-        viewModel.successEvent.observe(this,{
-            Toast.makeText(this,"로그인에 성공하였습니다",Toast.LENGTH_SHORT).show()
+        viewModel.successEvent.observe(this) {
+            Toast.makeText(this, "로그인에 성공하였습니다", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
-        })
+        }
         viewModel.failEvent.observe(this,{
             Toast.makeText(this,it,Toast.LENGTH_SHORT).show()
         })

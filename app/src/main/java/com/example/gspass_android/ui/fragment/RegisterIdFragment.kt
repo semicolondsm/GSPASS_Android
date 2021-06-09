@@ -10,20 +10,20 @@ import com.example.gspass_android.R
 
 class RegisterIdFragment: Fragment() {
 
-    lateinit var id : EditText
+     lateinit var id : EditText
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        super.onCreateView(inflater, container, savedInstanceState)
-        val view : View = inflater.inflate(R.layout.fragment_id, container,false)
+     override fun onCreateView(
+          inflater: LayoutInflater,
+          container: ViewGroup?,
+          savedInstanceState: Bundle?
+     ): View? {
+          super.onCreateView(inflater, container, savedInstanceState)
+          val view : View = inflater.inflate(R.layout.fragment_id, container,false)
 
-        id = view.findViewById(R.id.id)
+          id = view.findViewById(R.id.id)
 
-        return view
-    }
-    fun getPassId() =
-        id.text.toString()
+          return view
+     }
+     fun getPassId() =
+          id.text.toString()
 }

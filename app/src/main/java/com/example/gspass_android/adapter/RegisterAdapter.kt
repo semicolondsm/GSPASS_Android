@@ -25,14 +25,14 @@ class RegisterAdapter(fragmentActivity: FragmentActivity) : FragmentStateAdapter
     }
 
     override fun createFragment(position: Int): Fragment {
-        if(position == 0) {
-            return registerSchoolCodeFragment
+        return if(position == 0) {
+            registerSchoolCodeFragment
         }else if(position == 1) {
-            return registerUserInfoFragment
+            registerUserInfoFragment
         }else if(position==2){
-            return registerIdFragment
+            registerIdFragment
         }else{
-            return registerPasswordFragment
+            registerPasswordFragment
         }
     }
 }

@@ -4,8 +4,10 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.FrameLayout
 import android.widget.ImageButton
 import androidx.annotation.RequiresApi
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager2.widget.ViewPager2
 import com.example.gspass_android.R
@@ -13,6 +15,7 @@ import com.example.gspass_android.adapter.MealAdapter
 import com.example.gspass_android.databinding.ActivityMainBinding
 import com.example.gspass_android.ui.dialog.MyPageDialog
 import com.example.gspass_android.viewmodel.MainViewModel
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.delay
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -33,10 +36,25 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         setContentView(binding.root)
 
+        val sheet = findViewById<FrameLayout>(R.id.sheet)
+        BottomSheetBehavior.from(sheet).apply {
+            peekHeight = 100
+            this.state = BottomSheetBehavior.STATE_COLLAPSED
+        }
+
+        val passButton : ImageButton = findViewById(R.id.pass_button)
+        passButton.setOnClickListener {
+            viewModel.pass()
+        }
+
         val myPage: ImageButton = findViewById(R.id.my_page)
         myPage.setOnClickListener {
             openMyPage()
         }
+
+        viewModel.passSuccessEvent.observe(this,{
+            println("성공했습니다다")
+       })
 
         val mealAdapter = MealAdapter(viewModel)
 

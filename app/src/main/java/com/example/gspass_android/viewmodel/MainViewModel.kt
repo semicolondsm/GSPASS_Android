@@ -8,6 +8,7 @@ import com.example.gspass_android.adapter.MealAdapter
 import com.example.gspass_android.base.BaseViewModel
 import com.example.gspass_android.base.SingleLiveEvent
 import com.example.gspass_android.data.MealsData
+import com.example.gspass_android.data.PassData
 import com.example.gspass_android.pref.LocalStorage
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableSingleObserver
@@ -25,6 +26,7 @@ class MainViewModel(
 ) : BaseViewModel() {
 
     private val baseApi = api.getInstance()
+    val passSuccessEvent = SingleLiveEvent<Unit>()
     val successEvent = SingleLiveEvent<Unit>()
     val failEvent = SingleLiveEvent<String>()
 
@@ -50,6 +52,49 @@ class MainViewModel(
 
     private val accessToken = sharedPreferences.getAccessToken()
     private val mealAdapter = MealAdapter(this)
+
+    fun nextPassTime(){
+        val apiResult = baseApi.getPassNextTime(accessToken)
+        val disposableSingleObserver = object : DisposableSingleObserver<PassData>(){
+
+            override fun onSuccess(t: PassData) {
+
+            }
+
+            override fun onError(e: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        }
+    }
+
+    fun pass(){
+        val apiResult = baseApi.pass(accessToken)
+        val disposableSingleObserver = object : DisposableSingleObserver<PassData>(){
+
+            override fun onSuccess(t: PassData) {
+                println("${t.previous_count} ${t.time_remaining.hour}")
+                passSuccessEvent.setValue(Unit)
+            }
+
+            override fun onError(e: Throwable) {
+                println("실패")
+                when (e) {
+                    is HttpException -> when (e.code()) {
+                        404 -> failEvent.setValue("아이디와 비밀번호를 확인해 주세요")
+                        500 -> failEvent.setValue("서버 오류가 발생하였습니다")
+                        else -> failEvent.setValue("알 수 없는 에러가 발생하였습니다")
+                    }
+                }
+            }
+        }
+        val observer = apiResult
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(disposableSingleObserver)
+
+        addDisposable(observer)
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun meals(day: Int) {
