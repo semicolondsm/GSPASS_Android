@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.FrameLayout
 import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.DataBindingUtil
@@ -16,8 +17,13 @@ import com.example.gspass_android.databinding.ActivityMainBinding
 import com.example.gspass_android.ui.dialog.MyPageDialog
 import com.example.gspass_android.viewmodel.MainViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.MultiFormatWriter
+import com.journeyapps.barcodescanner.BarcodeEncoder
 import kotlinx.coroutines.delay
+import okio.blackholeSink
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,6 +41,24 @@ class MainActivity : AppCompatActivity() {
         binding.vm = viewModel
         binding.lifecycleOwner = this
         setContentView(binding.root)
+
+        val qrCodeImage : ImageView = findViewById(R.id.qrcode)
+
+        val multiFormaWriter = MultiFormatWriter()
+
+        viewModel.nextPassTime()
+
+        try {
+            val bitMatrix = multiFormaWriter.encode(viewModel.accessToken, BarcodeFormat.QR_CODE,300,300,)
+            val barcodeEncoder = BarcodeEncoder()
+            val bitmap = barcodeEncoder.createBitmap(bitMatrix)
+            qrCodeImage.setImageBitmap(bitmap)
+            println("비트맵 실행")
+        }catch (e : Exception){
+            println(e.message)
+        }
+
+
 
         val sheet = findViewById<FrameLayout>(R.id.sheet)
         BottomSheetBehavior.from(sheet).apply {
