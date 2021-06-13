@@ -8,31 +8,42 @@ interface ApiService {
     @POST("login")
     fun login(
         @Body loginInfo: LoginInfoData
-    ):Single<TokenData>
+    ): Single<TokenData>
 
     @POST("register")
     fun register(
-        @Body registerInfo : RegisterInfoData
-    ):Single<TokenData>
+        @Body registerInfo: RegisterInfoData
+    ): Single<TokenData>
 
     @GET("meals")
     fun meals(
         @Header("Authorization") accessToken: String,
         @Query("day") day: String,
-    ):Single<MealsData>
+    ): Single<MealsData>
+
     @POST("password")
     fun changePassword(
         @Header("Authorization") accessToken: String,
-        @Body changePassword : ChangePasswordData
-    ):Single<Unit>
+        @Body changePassword: ChangePasswordData
+    ): Single<Unit>
 
     @POST("./")
     fun pass(
         @Header("Authorization") accessToken: String,
-        ):Single<PassData>
+    ): Single<PassData>
 
     @GET("gspass/time")
     fun getPassNextTime(
         @Header("Authorization") accessToken: String
-        ):Single<PassNextTimeData>
+    ): Single<PassNextTimeData>
+
+    @GET("gspass")
+    fun passInfo(
+        @Header("Authorization") accessToken: String
+    ): Single<PassData>
+
+    @POST("gspass")
+    fun usePass(
+        @Header("Authorization") accessToken: String
+    ) : Single<Unit>
 }

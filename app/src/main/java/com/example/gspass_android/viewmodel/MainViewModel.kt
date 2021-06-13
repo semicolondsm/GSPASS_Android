@@ -1,6 +1,8 @@
 package com.example.gspass_android.viewmodel
 
 import android.os.Build
+import android.os.CountDownTimer
+import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import com.example.gspass_android.BaseApi
@@ -15,10 +17,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException
-import java.text.DateFormat
-import java.text.SimpleDateFormat
 import java.time.LocalDate
-import java.util.*
 import kotlin.collections.ArrayList
 
 class MainViewModel(
@@ -54,6 +53,16 @@ class MainViewModel(
 
     val passTime = MutableLiveData<String>()
 
+    val passCheck = MutableLiveData<Boolean>()
+
+    val previousCount = MutableLiveData<String>()
+
+    val passCountdown = MutableLiveData<String>()
+
+    init {
+        passCheck.value = sharedPreferences.getPassState()
+    }
+
     val accessToken = sharedPreferences.getAccessToken()
     private val mealAdapter = MealAdapter(this)
 
@@ -63,10 +72,66 @@ class MainViewModel(
 
             override fun onSuccess(t: PassNextTimeData) {
                 nextTineSuccessEvent.setValue(Unit)
+                println("PASS 발급은${t.gsPassTime} 부터 시작됩니다.")
                 passTime.value = "PASS 발급은${t.gsPassTime} 부터 시작됩니다."
             }
 
             override fun onError(e: Throwable) {
+                when (e) {
+                    is HttpException -> when (e.code()) {
+                        404 -> failEvent.setValue(e.message())
+                        500 -> failEvent.setValue("서버 오류가 발생하였습니다")
+                        else -> {
+                            failEvent.setValue("알 수 없는 에러가 발생하였습니다")
+                        }
+                    }
+                }
+            }
+        }
+        val observer = apiResult
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(disposableSingleObserver)
+
+        addDisposable(observer)
+    }
+
+    fun passTimer(hour: Int, min : Int, second : Int){
+        var hour = hour
+        var minute = min
+        var second = second
+        if(hour == 0 && minute ==0 && second == 0){
+            passCountdown.value = "타이머가 종료되었습니다"
+        }
+        else if(minute ==0 && second == 0){
+            hour -1
+            second = 60
+            minute = 60
+            passCountdown.value = ("${hour}:${minute}:${second}")
+
+        }
+        else if(second ==0){
+            second = 60
+            minute -1
+            passCountdown.value = ("${hour}:${minute}:${second}")
+        }else{
+            second--
+        }
+    }
+
+    fun passInfo(){
+        val apiResult = baseApi.passInfo(accessToken)
+        val disposableSingleObserver = object : DisposableSingleObserver<PassData>(){
+
+            override fun onSuccess(t: PassData) {
+                passCountdown.value = "${t.time_remaining.hour}: ${t.time_remaining.minute}: ${t.time_remaining.second}"
+                passSuccessEvent.setValue(Unit)
+                previousCount.value = "${t.previous_count}"
+                println("대기자 수 ${t.previous_count}")
+            }
+
+            override fun onError(e: Throwable) {
+                println("실패")
                 when (e) {
                     is HttpException -> when (e.code()) {
                         404 -> failEvent.setValue("아이디와 비밀번호를 확인해 주세요")
@@ -75,12 +140,11 @@ class MainViewModel(
                     }
                 }
             }
-
         }
         val observer = apiResult
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(disposableSingleObserver)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeWith(disposableSingleObserver)
 
         addDisposable(observer)
     }
@@ -92,6 +156,8 @@ class MainViewModel(
             override fun onSuccess(t: PassData) {
                 println("${t.previous_count} ${t.time_remaining.hour}")
                 passSuccessEvent.setValue(Unit)
+                passCheck.value = false
+                sharedPreferences.changePassState(false)
             }
 
             override fun onError(e: Throwable) {
@@ -212,7 +278,7 @@ class MainViewModel(
 
     fun getPlusDate(day: Int): String {
         val today: LocalDate = LocalDate.now()
-        var date = 0
+        val date: Int
         var month = 0
         val changeDay = today.plusDays(day.toLong())
         date = changeDay.dayOfMonth
@@ -225,16 +291,18 @@ class MainViewModel(
         sharedPreferences.removeTokens()
     }
 
-    fun getMealsString(meals: ArrayList<String>): String {
-        val size = meals.size
+    fun getMealsString(meals: ArrayList<String>?): String {
+        val size = meals?.size
         var mealString = ""
-        if(meals.isEmpty()){
+        if (meals == null) {
             mealString = "급식이 없습니다 ㅜㅜㅜ"
         }
-        if (size > 1) {
-            for (i in 0 until size) {
-                mealString += meals[i]
-                mealString += " "
+        if (size != null) {
+            if (size > 1) {
+                for (i in 0 until size) {
+                    mealString += meals[i]
+                    mealString += " "
+                }
             }
         }
         return mealString

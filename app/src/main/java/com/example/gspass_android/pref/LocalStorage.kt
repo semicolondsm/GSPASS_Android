@@ -6,4 +6,6 @@ interface LocalStorage {
   fun getAccessToken(): String
   fun getRefreshToken() : String
   fun removeTokens()
+  fun changePassState(state : Boolean)
+  fun getPassState() : Boolean
 }

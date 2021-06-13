@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -57,9 +58,6 @@ class MainActivity : AppCompatActivity() {
         }catch (e : Exception){
             println(e.message)
         }
-
-
-
         val sheet = findViewById<FrameLayout>(R.id.sheet)
         BottomSheetBehavior.from(sheet).apply {
             peekHeight = 100
@@ -78,6 +76,7 @@ class MainActivity : AppCompatActivity() {
 
         viewModel.passSuccessEvent.observe(this,{
             println("성공했습니다다")
+            viewModel.passInfo()
        })
 
         val mealAdapter = MealAdapter(viewModel)
@@ -88,12 +87,9 @@ class MainActivity : AppCompatActivity() {
         viewPager2.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         viewPager2.setCurrentItem(currentPosition, false)
         mealAdapter.pos.observe(this, {
-            println("이게 문제가 맞나요???????")
             mealAdapter.pos.value?.let { viewModel.meals(it-1) }
             println("$it 날짜 날짜")
-            println("제발 정상이여라 ${viewPager2.offscreenPageLimit}")
         })
-
 
         var firstCheck = 0
         viewModel.successEvent.observe(this, {

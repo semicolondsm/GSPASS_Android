@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="android.view.View"/>
+
         <variable
             name="vm"
             type="com.example.gspass_android.viewmodel.MainViewModel" />
@@ -66,6 +68,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:visibility="@{vm.passCheck?View.GONE:View.VISIBLE}"
                     android:alpha="50"
                     android:background="@drawable/pass_background">
 
@@ -95,7 +98,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="30dp"
-                        android:text="00:00:00"
+                        android:text="@{vm.passCountdown}"
                         android:textSize="60dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -127,7 +130,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:layout_marginBottom="30dp"
-                            android:text="00"
+                            android:text="@{vm.previousCount}"
                             android:textSize="65dp"
                             android:textColor="#ffffff"
                             android:textStyle="bold"
@@ -145,7 +148,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="gone"
+                    android:visibility="@{vm.passCheck?View.VISIBLE:View.GONE}"
                     android:background="@drawable/pass_background">
 
                     <ImageButton
@@ -160,10 +163,12 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="85dp"
                         android:layout_marginBottom="16dp"
                         android:text="@{vm.passTime}"
+                        android:textSize="15dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />

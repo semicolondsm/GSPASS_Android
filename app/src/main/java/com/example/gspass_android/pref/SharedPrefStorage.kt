@@ -9,6 +9,7 @@ class SharedPrefStorage(val context: Context) : LocalStorage {
 
      private val accessTokenKey = "AccessToken"
      private val refreshTokenKey = "RefreshToken"
+     private val passState ="State"
 
      override fun saveAccessToken(token: String) =
              getPref(context).edit().let {
@@ -35,6 +36,15 @@ class SharedPrefStorage(val context: Context) : LocalStorage {
                   it.apply()
              }
 
-     private fun getPref(context: Context): SharedPreferences =
+    override fun changePassState(state: Boolean) =
+        getPref(context).edit().let {
+            it.putBoolean(passState,state)
+            it.apply()
+        }
+
+    override fun getPassState() : Boolean =
+        getPref(context).getBoolean(passState,true)
+
+    private fun getPref(context: Context): SharedPreferences =
              context.getSharedPreferences("pref", Context.MODE_PRIVATE)
 }
