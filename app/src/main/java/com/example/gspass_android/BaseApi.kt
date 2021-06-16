@@ -12,7 +12,6 @@ import rxdogtag2.RxDogTag
 import java.util.concurrent.TimeUnit
 
 class BaseApi {
-    var club_id: String = ""
     val CONNECT_TIMEOUT: Long = 15
     val WRITE_TIMEOUT: Long = 15
     val READ_TIMEOUT: Long = 15
